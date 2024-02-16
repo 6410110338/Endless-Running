@@ -7,9 +7,9 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
     private Vector3 moveVector;
 
-    private float moveSpeed = 5.0f;
+    [SerializeField] public float moveSpeed = 4.2f;
     private float vertiicalVelocity = 0.0f;
-    private float gravity = 1.0f;
+    private float gravity = 10;
 
     private float animationDuration = 3.0f;
     // Start is called before the first frame update
@@ -50,5 +50,19 @@ public class PlayerMovement : MonoBehaviour
         moveVector.z = moveSpeed;
 
         characterController.Move(moveVector * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "item")
+        {
+            Debug.Log("Destroy");
+            Destroy(other.gameObject);
+        }
+        else
+        {
+            Debug.Log("NoPlayer");
+        }
+
     }
 }
