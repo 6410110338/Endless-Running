@@ -18,7 +18,7 @@ public class Item : MonoBehaviour
         {
             Debug.Log("speedBoots");
             player = other.gameObject.GetComponent<PlayerMovement>();
-            player.moveSpeed += 10;
+            player.SetSpeed(10);
         }
         else
         {
