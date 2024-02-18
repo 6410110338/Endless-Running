@@ -19,18 +19,18 @@ public class test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             anim.SetBool("isSlide", true);
 
-            moveVector.z = 15;
+            moveVector.z = 7;
         }
         else
         {
             anim.SetBool("isSlide", false);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetBool("isJump", true);
         }
@@ -38,5 +38,10 @@ public class test : MonoBehaviour
         {
             anim.SetBool("isJump", false);
         }
+
+        moveVector.x = 0;
+        moveVector.y = 0;
+        moveVector.z = 5;
+        characterController.Move(moveVector * Time.deltaTime);
     }
 }

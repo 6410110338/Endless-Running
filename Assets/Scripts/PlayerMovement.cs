@@ -27,10 +27,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDead)
-            return;
-
-        bool groundedPlayer = characterController.isGrounded;
+        /*if (isDead)
+            return;*/
 
         if (Time.time < animationDuration)
         {
@@ -38,11 +36,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        //Debug.Log(groundedPlayer);
-
+        bool groundedPlayer = characterController.isGrounded;
         if (groundedPlayer)
         {
-            anim.SetBool("isJump", false);
             // cooldown interval to allow reliable jumping even whem coming down ramps
             groundedTimer = 0.2f;
         }
@@ -59,23 +55,28 @@ public class PlayerMovement : MonoBehaviour
         
         verticalVelocity -= gravity * Time.deltaTime;
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
-            anim.SetBool("isJump", true);
             if (groundedTimer > 0)
             {
+                anim.SetBool("isJump", true);
                 groundedTimer = 0;
                 verticalVelocity += Mathf.Sqrt(jumpHeight * 2 * gravity);
             }
         }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            anim.SetBool("isSlide",true);
-        }
         else
         {
-            anim.SetBool("isSlide", false);
+            anim.SetBool("isJump", false);
+        }
+        
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && groundedPlayer)
+        {
+            characterController.center = new Vector3(0.0f, 0.48f,0.0f);
+            characterController.height = 0.64f;
+            moveVector.z = 6;
+            Invoke("ResetColliderForSlide",1.0f);
+            anim.SetBool("isSlide",true);
         }
 
         //X - Left and Right
@@ -123,5 +124,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isDead = true;
         GetComponent<UIScore>().OnDeath();
+    }
+
+    private void ResetColliderForSlide()
+    {
+        characterController.height = 1.6f;
+        characterController.center = new Vector3(0f, 0.8f, 0f);
+        anim.SetBool("isSlide", false);
     }
 }
