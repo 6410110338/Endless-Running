@@ -27,14 +27,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDead)
-            return;
 
         if (Time.time < animationDuration)
         {
             characterController.Move(Vector3.forward * moveSpeed * Time.deltaTime);
             return;
         }
+
+        if (isDead)
+            return;
 
         bool groundedPlayer = characterController.isGrounded;
         if (groundedPlayer)

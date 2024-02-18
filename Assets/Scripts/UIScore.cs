@@ -31,7 +31,8 @@ public class UIScore : MonoBehaviour
             LevelUp();
 
         score += Time.deltaTime;
-        scoreText.text = ((int)score).ToString();
+        scoreText.text = "Score: " + ((int)score);
+
     }
 
     void LevelUp()
@@ -48,6 +49,8 @@ public class UIScore : MonoBehaviour
     public void OnDeath()
     {
         isDeath = true;
+        if (PlayerPrefs.GetFloat("Highscore") < score)
+            PlayerPrefs.SetFloat("Highscore",score);
         deathMenu.ToggleEndMenu(score);
     }
 
