@@ -2406,10 +2406,10 @@ MonoBehaviour:
   - {fileID: 3860117189011680153, guid: 846b462bc26951341a6119399d67fe6e, type: 3}
   - {fileID: 7109778785454414337, guid: 5e482882eee0ce648941ae327db1f2e8, type: 3}
   - {fileID: 1601665857166422352, guid: 89f98109fac35e549b7dffb3bdf9b88c, type: 3}
-  spawnZ: -10
-  tileLength: 10
-  safeZone: 13
-  amnTilesOnScreen: 7
+  spawnZ: -40
+  tileLength: 40
+  safeZone: 45
+  amnTilesOnScreen: 3
 --- !u!1 &1294485407
 GameObject:
   m_ObjectHideFlags: 0
