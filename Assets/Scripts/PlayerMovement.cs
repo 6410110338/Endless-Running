@@ -16,25 +16,28 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator anim;
     private float animationDuration = 3.0f;
+    private bool AnimationRUN = true;
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
         characterController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+
+        StartCoroutine(WaitToMove());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDead)
-            return;
-
-        if (Time.time < animationDuration)
+        if (AnimationRUN)
         {
             characterController.Move(Vector3.forward * moveSpeed * Time.deltaTime);
             return;
         }
+
+        if (isDead)
+            return;
 
         bool groundedPlayer = characterController.isGrounded;
         if (groundedPlayer)
@@ -79,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isSlide",true);
         }
 
+        
         //X - Left and Right
         moveVector.x = Input.GetAxisRaw("Horizontal") * (moveSpeed > 10? 7:4);
 
@@ -91,6 +95,11 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(moveVector * Time.deltaTime);
     }
 
+    IEnumerator WaitToMove()
+    {
+        yield return new WaitForSeconds(animationDuration);
+        AnimationRUN = false;
+    }
 
     public void SetSpeed(int modifier)
     {
