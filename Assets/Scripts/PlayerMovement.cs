@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDead = false;
     private Vector3 moveVector;
 
-    [SerializeField] public float moveSpeed = 4.2f;
+    [SerializeField] private float moveSpeed = 4.2f;
     [SerializeField] private float jumpHeight = 3.0f;
     private float verticalVelocity;
     private float gravity = 9.81f;
@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (isDead)
-            return;*/
+        if (isDead)
+            return;
 
         if (Time.time < animationDuration)
         {
@@ -74,13 +74,13 @@ public class PlayerMovement : MonoBehaviour
         {
             characterController.center = new Vector3(0.0f, 0.48f,0.0f);
             characterController.height = 0.64f;
-            moveVector.z = 6;
+            moveVector.z = moveSpeed + 0.8f;
             Invoke("ResetColliderForSlide",1.0f);
             anim.SetBool("isSlide",true);
         }
 
         //X - Left and Right
-        moveVector.x = Input.GetAxisRaw("Horizontal") * moveSpeed;
+        moveVector.x = Input.GetAxisRaw("Horizontal") * (moveSpeed > 10? 7:4);
 
         //Y - Up and Down
         moveVector.y = verticalVelocity;
@@ -92,24 +92,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "item")
-        {
-            Debug.Log("Destroy");
-            Destroy(other.gameObject);
-        }
-        else
-        {
-            Debug.Log("NoPlayer");
-        }
-
-    }
-
-
     public void SetSpeed(int modifier)
     {
-        moveSpeed = 5.0f + modifier;
+        moveSpeed += modifier;
     }
 
     //It is being called every time our capsule hits something

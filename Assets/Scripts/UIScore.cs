@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIScore : MonoBehaviour
 {
-    private float score = 0.0f;
+    public float score = 0.0f;
     [SerializeField] private Text scoreText;
 
     [SerializeField] private int difficultyLevel = 1;
@@ -49,5 +49,10 @@ public class UIScore : MonoBehaviour
     {
         isDeath = true;
         deathMenu.ToggleEndMenu(score);
+    }
+
+    public void AddScore(int modifier)
+    {
+        score += modifier;
     }
 }
