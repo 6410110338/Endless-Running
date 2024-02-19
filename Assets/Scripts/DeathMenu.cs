@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class DeathMenu : MonoBehaviour
 {
+    public Camera cameraController;
     public Text scoreText;
     public Image backgroundImg;
 
@@ -33,7 +35,9 @@ public class DeathMenu : MonoBehaviour
     public void ToggleEndMenu(float score)
     {
         gameObject.SetActive(true);
-        scoreText.text = ((int)score).ToString();
+     
+        scoreText.text = scoreText.text = "HighScoore: " + ((int)PlayerPrefs.GetFloat("Highscore"));
+        isShowed = true;
     }
 
     public void Restart()
